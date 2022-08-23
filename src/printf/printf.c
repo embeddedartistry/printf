@@ -917,7 +917,7 @@ static void print_exponential_number(output_gadget_t* output, double number, pri
   // Account for roll-over, e.g. rounding from 9.99 to 100.0 - which effects
   // the exponent and may require additional tweaking of the parts
   if (fall_back_to_decimal_only_mode) {
-    if ((flags & FLAGS_ADAPT_EXP) && floored_exp10 >= -1 && decimal_part_components.integral == powers_of_10[floored_exp10 + 1]) {
+    if ((flags & FLAGS_ADAPT_EXP) && floored_exp10 >= -1 && ((double)decimal_part_components.integral == powers_of_10[floored_exp10 + 1])) {
       floored_exp10++; // Not strictly necessary, since floored_exp10 is no longer really used
       precision--;
       // ... and it should already be the case that decimal_part_components.fractional == 0
