@@ -1413,6 +1413,7 @@ int vsprintf_(char* s, const char* format, va_list arg)
 
 int vfctprintf(void (*out)(char c, void* extra_arg), void* extra_arg, const char* format, va_list arg)
 {
+  if (out == NULL) { return 0; }
   output_gadget_t gadget = function_gadget(out, extra_arg);
   return vsnprintf_impl(&gadget, format, arg);
 }
