@@ -634,15 +634,16 @@ static struct floating_point_components get_components(floating_point_t number, 
       ++number_.integral;
     }
   }
-  else if ((remainder == one_half) && ((number_.fractional == 0U) || (number_.fractional & 1U))) {
-    // if halfway, round up if odd OR if last digit is 0
+  else if ((remainder == one_half) && (number_.fractional & 1U)) {
+    // Banker's rounding, i.e. round half to even:
+    // 1.5 -> 2, but 2.5 -> 2
     ++number_.fractional;
   }
 
   if (precision == 0U) {
     remainder = abs_number - (floating_point_t) number_.integral;
-    if ((remainder == one_half) && (number_.integral & 1)) {
-      // exactly 0.5 and ODD, then round up
+    if ((remainder == one_half) && (number_.integral & 1U)) {
+      // Banker's rounding, i.e. round half to even:
       // 1.5 -> 2, but 2.5 -> 2
       ++number_.integral;
     }
