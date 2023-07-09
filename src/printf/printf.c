@@ -620,13 +620,13 @@ static struct floating_point_components get_components(floating_point_t number, 
   number_.is_negative = get_sign_bit(number);
   floating_point_t abs_number = (number_.is_negative) ? -number : number;
   number_.integral = (int_fast64_t) abs_number;
-  floating_point_t remainder = (abs_number - (floating_point_t) number_.integral) * powers_of_10[precision];
-  number_.fractional = (int_fast64_t) remainder;
+  floating_point_t scaled_remainder = (abs_number - (floating_point_t) number_.integral) * powers_of_10[precision];
+  number_.fractional = (int_fast64_t) scaled_remainder;
 
-  remainder -= (floating_point_t) number_.fractional;
-  floating_point_t rounding_threshold = (floating_point_t)  0.5;
+  floating_point_t remainder = scaled_remainder - (floating_point_t) number_.fractional;
+  const floating_point_t one_half = (floating_point_t)  0.5;
 
-  if (remainder > rounding_threshold) {
+  if (remainder > one_half) {
     ++number_.fractional;
     // handle rollover, e.g. case 0.99 with precision 1 is 1.0
     if ((floating_point_t) number_.fractional >= powers_of_10[precision]) {
@@ -634,14 +634,14 @@ static struct floating_point_components get_components(floating_point_t number, 
       ++number_.integral;
     }
   }
-  else if ((remainder == rounding_threshold) && ((number_.fractional == 0U) || (number_.fractional & 1U))) {
+  else if ((remainder == one_half) && ((number_.fractional == 0U) || (number_.fractional & 1U))) {
     // if halfway, round up if odd OR if last digit is 0
     ++number_.fractional;
   }
 
   if (precision == 0U) {
     remainder = abs_number - (floating_point_t) number_.integral;
-    if ((!(remainder < rounding_threshold) || (remainder > rounding_threshold)) && (number_.integral & 1)) {
+    if ((!(remainder < one_half) || (remainder > one_half)) && (number_.integral & 1)) {
       // exactly 0.5 and ODD, then round up
       // 1.5 -> 2, but 2.5 -> 2
       ++number_.integral;
