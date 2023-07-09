@@ -641,7 +641,7 @@ static struct floating_point_components get_components(floating_point_t number, 
 
   if (precision == 0U) {
     remainder = abs_number - (floating_point_t) number_.integral;
-    if ((!(remainder < one_half) || (remainder > one_half)) && (number_.integral & 1)) {
+    if ((remainder == one_half) && (number_.integral & 1)) {
       // exactly 0.5 and ODD, then round up
       // 1.5 -> 2, but 2.5 -> 2
       ++number_.integral;
