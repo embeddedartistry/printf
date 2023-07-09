@@ -621,7 +621,7 @@ static struct floating_point_components get_components(floating_point_t number, 
   floating_point_t abs_number = (number_.is_negative) ? -number : number;
   number_.integral = (int_fast64_t) abs_number;
   floating_point_t scaled_remainder = (abs_number - (floating_point_t) number_.integral) * powers_of_10[precision];
-  number_.fractional = (int_fast64_t) scaled_remainder;
+  number_.fractional = (int_fast64_t) scaled_remainder; // for precision == 0U, this will be 0
 
   floating_point_t remainder = scaled_remainder - (floating_point_t) number_.fractional;
   const floating_point_t one_half = (floating_point_t)  0.5;
