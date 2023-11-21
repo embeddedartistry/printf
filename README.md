@@ -248,7 +248,7 @@ Notes:
 
 * The `L` modifier, for `long double`, is not currently supported.
 * A `"%zd"` or `"%zi"` takes a signed integer of the same size as `size_t`. 
-* The implementation currently assumes each of `intmax_t`, signed `size_t`, and `ptrdiff_t` has the same size as `long int` or as `long long int`. If this is not the case for your platform, please open an issue.
+* The implementation currently assumes `intmax_t` has the same size as either `long int` or `long long int`. If this is not the case for your platform, please open an issue.
 * The `Ixx` length modifiers are not in the C (nor C++) standard, but are somewhat popular, as it makes it easier to handle integer types of specific size. One must specify the argument size in bits immediately after the `I`. The printing is "integer-promotion-safe", i.e. the fact that an `int8_t` may actually be passed in promoted into a larger `int` will not prevent it from being printed using its original value.
 
 ### Return Value

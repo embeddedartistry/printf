@@ -1165,7 +1165,7 @@ static inline void format_string_loop(output_gadget_t* output, const char* forma
         }
         break;
       case 't' :
-        flags |= (sizeof(ptrdiff_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
+        flags |= (sizeof(ptrdiff_t) <= sizeof(int) ) ? FLAGS_INT : (sizeof(ptrdiff_t) == sizeof(long)) ? FLAGS_LONG : FLAGS_LONG_LONG;
         ADVANCE_IN_FORMAT_STRING(format);
         break;
       case 'j' :
@@ -1173,7 +1173,7 @@ static inline void format_string_loop(output_gadget_t* output, const char* forma
         ADVANCE_IN_FORMAT_STRING(format);
         break;
       case 'z' :
-        flags |= (sizeof(size_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
+        flags |= (sizeof(size_t) <= sizeof(int) ) ? FLAGS_INT : (sizeof(size_t) == sizeof(long)) ? FLAGS_LONG : FLAGS_LONG_LONG;
         ADVANCE_IN_FORMAT_STRING(format);
         break;
       default:
