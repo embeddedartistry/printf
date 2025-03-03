@@ -440,7 +440,8 @@ TEST_CASE("brute_force_float", "[libprintf]")
     sprintf_(buffer, "%." EXPAND_AND_STRINGIFY(LOOP_PRECISION) "f", (double) i);
     sstr.str("");
     sstr << std::setprecision(LOOP_PRECISION) << i;
-    auto expected = sstr.str().c_str();
+    auto str = sstr.str();
+    auto expected = str.c_str();
     if (strcmp(buffer, expected) != 0) {
       std::cerr
       << n << ": sprintf_(\"%" EXPAND_AND_STRINGIFY(LOOP_PRECISION) "f\", " << std::setw(18) << std::setprecision(30) << i << ") = " << std::setw(15)
