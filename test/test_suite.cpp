@@ -45,7 +45,6 @@
 #endif
 
 // use the 'catch' test framework
-#define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
 #include <cstring>
@@ -73,6 +72,14 @@ typedef SSIZE_T ssize_t;
 # define snprintf   snprintf_
 # define vsnprintf  vsnprintf_
 # define vprintf    vprintf_
+#endif
+
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
 
@@ -195,12 +202,7 @@ void _out_fct(char character, void* arg)
   printf_buffer[printf_idx++] = character;
 }
 
-#ifndef STRINGIFY
-#define STRINGIFY(_x) #_x
-#endif
-#define PRINTF_TEST_CASE(unstringified_name)  TEST_CASE(STRINGIFY(unstringified_name), "[]")
-
-PRINTF_TEST_CASE(printf) {
+TEST_CASE("printf", "[libprintf]") {
   printf_idx = 0U;
   memset(printf_buffer, 0xCC, base_buffer_size);
   INFO("printf_ format string and arguments: ");
@@ -216,7 +218,7 @@ PRINTF_TEST_CASE(printf) {
 }
 
 
-PRINTF_TEST_CASE(fctprintf) {
+TEST_CASE("fctprintf", "[libprintf]") {
   printf_idx = 0U;
   memset(printf_buffer, 0xCC, base_buffer_size);
   fctprintf(&_out_fct, nullptr, "This is a test of %X", 0x12EFU);
@@ -238,7 +240,7 @@ static void vfctprintf_builder_1(out_fct_type_ f, char* buffer, ...)
   va_end(args);
 }
 
-PRINTF_TEST_CASE(vfctprintf) {
+TEST_CASE("vfctprintf", "[libprintf]") {
   printf_idx = 0U;
   memset(printf_buffer, 0xCC, base_buffer_size);
   vfctprintf_builder_1(&_out_fct, nullptr, 0x12EFU);
@@ -246,7 +248,7 @@ PRINTF_TEST_CASE(vfctprintf) {
   CHECK(printf_buffer[22] == (char)0xCC);
 }
 
-PRINTF_TEST_CASE(snprintf_) {
+TEST_CASE("snprintf_", "[libprintf]") {
   char buffer[base_buffer_size];
   PRINTING_CHECK_WITH_BUF_SIZE("-1000", ==, snprintf_, buffer, base_buffer_size, "%d", -1000);
   PRINTING_CHECK_WITH_BUF_SIZE("-1",    ==, snprintf_, buffer, 3U, "%d", -1000);
@@ -293,7 +295,7 @@ static void vsnprintf_builder_3(char* buffer, ...)
 }
 
 
-PRINTF_TEST_CASE(vprintf) {
+TEST_CASE("vprintf", "[libprintf]") {
   char buffer[base_buffer_size];
   printf_idx = 0U;
   memset(printf_buffer, 0xCC, base_buffer_size);
@@ -304,7 +306,7 @@ PRINTF_TEST_CASE(vprintf) {
 }
 
 
-PRINTF_TEST_CASE(vsprintf) {
+TEST_CASE("vsprintf", "[libprintf]") {
   char buffer[base_buffer_size];
 
   vsprintf_builder_1(buffer, -1);
@@ -315,7 +317,7 @@ PRINTF_TEST_CASE(vsprintf) {
 }
 
 
-PRINTF_TEST_CASE(vsnprintf_) {
+TEST_CASE("vsnprintf_", "[libprintf]") {
   char buffer[base_buffer_size];
 
   vsnprintf_builder_1(buffer, -1);
@@ -325,7 +327,7 @@ PRINTF_TEST_CASE(vsnprintf_) {
   CHECK(!strcmp(buffer, "3 -1000 test"));
 }
 
-PRINTF_TEST_CASE(writeback_specifier) {
+TEST_CASE("writeback_specifier", "[libprintf]") {
   char buffer[base_buffer_size];
 
   struct {
@@ -352,7 +354,7 @@ PRINTF_TEST_CASE(writeback_specifier) {
   CHECK(num_written.int_ == 3);
 }
 
-PRINTF_TEST_CASE(ret_value)
+TEST_CASE("ret_value", "[libprintf]")
 {
   char buffer[base_buffer_size];
   int ret;
@@ -393,7 +395,7 @@ PRINTF_TEST_CASE(ret_value)
 }
 
 #if PRINTF_SUPPORT_DECIMAL_SPECIFIERS || PRINTF_SUPPORT_EXPONENTIAL_SPECIFIERS
-PRINTF_TEST_CASE(brute_force_float)
+TEST_CASE("brute_force_float", "[libprintf]")
 {
   char buffer[base_buffer_size];
 #if PRINTF_SUPPORT_DECIMAL_SPECIFIERS

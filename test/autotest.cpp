@@ -14,6 +14,15 @@
 #include "printf_config.h"
 #include "../src/printf/printf.h"
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
+
 #ifndef PRINTF_ALIAS_STANDARD_FUNCTION_NAMES
 #define PRINTF_ALIAS_STANDARD_FUNCTION_NAMES 0
 #endif

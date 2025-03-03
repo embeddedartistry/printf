@@ -1,14 +1,22 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.13)
 
 enable_language(CXX)
 
-set(test_targets autotest)
 if (NOT ALIAS_STANDARD_FUNCTION_NAMES STREQUAL SOFT)
 	list(APPEND test_targets test_suite)
 endif()
 
 option(TEST_WITH_NON_STANDARD_FORMAT_STRINGS "Include tests using non-standard-compliant format strings?" ON)
 # ... don't worry, we'll suppress the compiler warnings for those.
+
+add_executable(autotest autotest.cpp)
+set_target_properties(
+	autotest
+	PROPERTIES
+	CXX_STANDARD 14
+	CXX_STANDARD_REQUIRED YES
+	CXX_EXTENSIONS NO
+)
 
 foreach(tgt ${test_targets})
 	add_executable(${tgt} ${tgt}.cpp catch_amalgamated.cpp)
@@ -19,6 +27,7 @@ foreach(tgt ${test_targets})
 		CXX_STANDARD_REQUIRED YES
 		CXX_EXTENSIONS NO
 	)
+
 
 	if (TEST_WITH_NON_STANDARD_FORMAT_STRINGS)
 		target_compile_definitions(${tgt} PRIVATE TEST_WITH_NON_STANDARD_FORMAT_STRINGS)

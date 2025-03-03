@@ -1,15 +1,7 @@
 // This file is to be included into either test_suite.cpp or another
 // variant of the test suite. It is _not_ self contained in any way
 
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#elif defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif
-
-PRINTF_TEST_CASE(space_flag)
+TEST_CASE("space_flag", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK(" 42",                     ==, sprintf_, buffer, "% d", 42);
@@ -31,7 +23,7 @@ PRINTF_TEST_CASE(space_flag)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(space_flag__non_standard_format)
+TEST_CASE("space_flag__non_standard_format", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("Hello testing",           ==, sprintf_, buffer, "% s", mkstr("Hello testing"));
@@ -58,7 +50,7 @@ PRINTF_TEST_CASE(space_flag__non_standard_format)
 #endif
 
 
-PRINTF_TEST_CASE(plus_flag)
+TEST_CASE("plus_flag", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("+42",                     ==, sprintf_, buffer, "%+d", 42);
@@ -84,7 +76,7 @@ PRINTF_TEST_CASE(plus_flag)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(plus_flag__non_standard_format)
+TEST_CASE("plus_flag__non_standard_format", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("Hello testing",           ==, sprintf_, buffer, "%+s", mkstr("Hello testing"));
@@ -108,7 +100,7 @@ PRINTF_TEST_CASE(plus_flag__non_standard_format)
 #endif
 
 
-PRINTF_TEST_CASE(zero_flag)
+TEST_CASE("zero_flag", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("42",                      ==, sprintf_, buffer, "%0d", 42);
@@ -126,7 +118,7 @@ PRINTF_TEST_CASE(zero_flag)
 }
 
 
-PRINTF_TEST_CASE(minus_flag)
+TEST_CASE("minus_flag", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("42",                      ==, sprintf_, buffer, "%-d", 42);
@@ -139,7 +131,7 @@ PRINTF_TEST_CASE(minus_flag)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(minus_flag_and_non_standard_zero_modifier_for_integers)
+TEST_CASE("minus_flag_and_non_standard_zero_modifier_for_integers", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("42",                      ==, sprintf_, buffer, "%-0d", 42);
@@ -171,7 +163,7 @@ PRINTF_TEST_CASE(minus_flag_and_non_standard_zero_modifier_for_integers)
 #endif
 
 
-PRINTF_TEST_CASE(sharp_flag)
+TEST_CASE("sharp_flag", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("0",                       ==, sprintf_, buffer, "%#o",   0);
@@ -194,7 +186,7 @@ PRINTF_TEST_CASE(sharp_flag)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(sharp_flag__non_standard_format)
+TEST_CASE("sharp_flag__non_standard_format", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("0b110",                   ==, sprintf_, buffer, "%#b",    6);
@@ -208,7 +200,7 @@ PRINTF_TEST_CASE(sharp_flag__non_standard_format)
 
 #if PRINTF_SUPPORT_LONG_LONG
 
-PRINTF_TEST_CASE(sharp_flag_with_long_long)
+TEST_CASE("sharp_flag_with_long_long", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("0",                       ==, sprintf_, buffer, "%#llo",   (long long) 0);
@@ -232,7 +224,7 @@ PRINTF_TEST_CASE(sharp_flag_with_long_long)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(sharp_flag_with_long_long__non_standard_format)
+TEST_CASE("sharp_flag_with_long_long__non_standard_format", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("0b110",                   ==, sprintf_, buffer, "%#llb", (long long) 6);
@@ -241,7 +233,7 @@ PRINTF_TEST_CASE(sharp_flag_with_long_long__non_standard_format)
 #endif
 #endif // PRINTF_SUPPORT_LONG_LONG
 
-PRINTF_TEST_CASE(specifier)
+TEST_CASE("specifier", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("Hello testing",           ==, sprintf_, buffer, "Hello testing");
@@ -283,7 +275,7 @@ PRINTF_TEST_CASE(specifier)
 }
 
 
-PRINTF_TEST_CASE(width)
+TEST_CASE("width", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("Hello testing",           ==, sprintf_, buffer, "%1s", mkstr("Hello testing"));
@@ -312,7 +304,7 @@ PRINTF_TEST_CASE(width)
 }
 
 
-PRINTF_TEST_CASE(width_20)
+TEST_CASE("width_20", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("               Hello",    ==, sprintf_, buffer, "%20s", mkstr("Hello"));
@@ -347,7 +339,7 @@ PRINTF_TEST_CASE(width_20)
 }
 
 
-PRINTF_TEST_CASE(width_asterisk_20)
+TEST_CASE("width_asterisk_20", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("               Hello",    ==, sprintf_, buffer, "%*s", 20, mkstr("Hello"));
@@ -376,7 +368,7 @@ PRINTF_TEST_CASE(width_asterisk_20)
 }
 
 
-PRINTF_TEST_CASE(width_minus_20)
+TEST_CASE("width_minus_20", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("Hello               ",    ==, sprintf_, buffer, "%-20s", mkstr("Hello"));
@@ -404,7 +396,7 @@ PRINTF_TEST_CASE(width_minus_20)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(width_0_minus_20)
+TEST_CASE("width_0_minus_20", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("Hello               ",    ==, sprintf_, buffer, "%0-20s", mkstr("Hello"));
@@ -425,7 +417,7 @@ PRINTF_TEST_CASE(width_0_minus_20)
 
 #endif
 
-PRINTF_TEST_CASE(padding_20)
+TEST_CASE("padding_20", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("00000000000000001024",    ==, sprintf_, buffer, "%020d", 1024);
@@ -443,7 +435,7 @@ PRINTF_TEST_CASE(padding_20)
 }
 
 
-PRINTF_TEST_CASE(padding_dot_20)
+TEST_CASE("padding_dot_20", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("00000000000000001024",    ==, sprintf_, buffer, "%.20d", 1024);
@@ -462,7 +454,7 @@ PRINTF_TEST_CASE(padding_dot_20)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(padding_sharp_020__non_standard_format)
+TEST_CASE("padding_sharp_020__non_standard_format", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("00000000000000001024",    ==, sprintf_, buffer, "%#020d", 1024);
@@ -475,7 +467,7 @@ PRINTF_TEST_CASE(padding_sharp_020__non_standard_format)
 
 #endif
 
-PRINTF_TEST_CASE(padding_sharp_020)
+TEST_CASE("padding_sharp_020", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("00000000000000000777",    ==, sprintf_, buffer, "%#020o", 511);
@@ -489,7 +481,7 @@ PRINTF_TEST_CASE(padding_sharp_020)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(padding_sharp_20__non_standard_format)
+TEST_CASE("padding_sharp_20__non_standard_format", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("                1024",    ==, sprintf_, buffer, "%#20d", 1024);
@@ -502,7 +494,7 @@ PRINTF_TEST_CASE(padding_sharp_20__non_standard_format)
 
 #endif
 
-PRINTF_TEST_CASE(padding_sharp_20)
+TEST_CASE("padding_sharp_20", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("                0777",    ==, sprintf_, buffer, "%#20o", 511);
@@ -514,7 +506,7 @@ PRINTF_TEST_CASE(padding_sharp_20)
 }
 
 
-PRINTF_TEST_CASE(padding_20_point_5)
+TEST_CASE("padding_20_point_5", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("               01024",    ==, sprintf_, buffer, "%20.5d", 1024);
@@ -532,7 +524,7 @@ PRINTF_TEST_CASE(padding_20_point_5)
 }
 
 
-PRINTF_TEST_CASE(padding_negative_numbers)
+TEST_CASE("padding_negative_numbers", "[libprintf]")
 {
   char buffer[base_buffer_size];
 
@@ -552,7 +544,7 @@ PRINTF_TEST_CASE(padding_negative_numbers)
 
 #if PRINTF_SUPPORT_DECIMAL_SPECIFIERS || PRINTF_SUPPORT_EXPONENTIAL_SPECIFIERS
 
-PRINTF_TEST_CASE(float_padding_negative_numbers)
+TEST_CASE("float_padding_negative_numbers", "[libprintf]")
 {
   char buffer[base_buffer_size];
 
@@ -590,7 +582,7 @@ PRINTF_TEST_CASE(float_padding_negative_numbers)
 
 #endif // PRINTF_SUPPORT_DECIMAL_SPECIFIERS || PRINTF_SUPPORT_EXPONENTIAL_SPECIFIERS
 
-PRINTF_TEST_CASE(length)
+TEST_CASE("length", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("",                        ==, sprintf_, buffer, "%.0s", mkstr("Hello testing"));
@@ -623,7 +615,7 @@ PRINTF_TEST_CASE(length)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(length__non_standard_format)
+TEST_CASE("length__non_standard_format", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("  ",                      ==, sprintf_, buffer, "%02.0u", 0U);
@@ -635,7 +627,7 @@ PRINTF_TEST_CASE(length__non_standard_format)
 
 #if PRINTF_SUPPORT_DECIMAL_SPECIFIERS || PRINTF_SUPPORT_EXPONENTIAL_SPECIFIERS
 
-PRINTF_TEST_CASE(infinity_and_not_a_number_values)
+TEST_CASE("infinity_and_not_a_number_values", "[libprintf]")
 {
   char buffer[base_buffer_size];
 
@@ -656,7 +648,7 @@ PRINTF_TEST_CASE(infinity_and_not_a_number_values)
 
 #if PRINTF_SUPPORT_DECIMAL_SPECIFIERS
 
-PRINTF_TEST_CASE(floating_point_specifiers_with_31_to_32_bit_integer_values)
+TEST_CASE("floating_point_specifiers_with_31_to_32_bit_integer_values", "[libprintf]")
 {
   char buffer[base_buffer_size];
 #if PRINTF_MAX_INTEGRAL_DIGITS_FOR_DECIMAL >= 10
@@ -680,7 +672,7 @@ PRINTF_TEST_CASE(floating_point_specifiers_with_31_to_32_bit_integer_values)
 
 #if PRINTF_SUPPORT_EXPONENTIAL_SPECIFIERS
 
-PRINTF_TEST_CASE(tiny_floating_point_values)
+TEST_CASE("tiny_floating_point_values", "[libprintf]")
 {
   char buffer[base_buffer_size];
 //  boltzman_s_constant = 1.380651569e-23;
@@ -709,7 +701,7 @@ PRINTF_TEST_CASE(tiny_floating_point_values)
 
 #if PRINTF_SUPPORT_DECIMAL_SPECIFIERS
 
-PRINTF_TEST_CASE(fallback_from_decimal_to_exponential)
+TEST_CASE("fallback_from_decimal_to_exponential", "[libprintf]")
 {
   char buffer[base_buffer_size];
   CAPTURE_AND_PRINT(sprintf_, buffer, "%.0f", (double) ((int64_t) 1 * 1000));
@@ -769,7 +761,7 @@ PRINTF_TEST_CASE(fallback_from_decimal_to_exponential)
 
 #if PRINTF_SUPPORT_DECIMAL_SPECIFIERS || PRINTF_SUPPORT_EXPONENTIAL_SPECIFIERS
 
-PRINTF_TEST_CASE(floating_point_specifiers_precision_and_flags)
+TEST_CASE("floating_point_specifiers_precision_and_flags", "[libprintf]")
 {
   char buffer[base_buffer_size];
 #if PRINTF_SUPPORT_DECIMAL_SPECIFIERS
@@ -832,7 +824,7 @@ PRINTF_TEST_CASE(floating_point_specifiers_precision_and_flags)
 }
 #endif // PRINTF_SUPPORT_DECIMAL_SPECIFIERS || PRINTF_SUPPORT_EXPONENTIAL_SPECIFIERS
 
-PRINTF_TEST_CASE(integer_types)
+TEST_CASE("integer_types", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("0",                       ==, sprintf_, buffer, "%i", 0);
@@ -876,7 +868,7 @@ PRINTF_TEST_CASE(integer_types)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(types__non_standard_format)
+TEST_CASE("types__non_standard_format", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("1110101001100000",        ==, sprintf_, buffer, "%b", 60000);
@@ -885,7 +877,7 @@ PRINTF_TEST_CASE(types__non_standard_format)
 
 #endif
 
-PRINTF_TEST_CASE(pointer)
+TEST_CASE("pointer", "[libprintf]")
 {
   char buffer[base_buffer_size];
 
@@ -921,7 +913,7 @@ PRINTF_TEST_CASE(pointer)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(unknown_flag__non_standard_format)
+TEST_CASE("unknown_flag__non_standard_format", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("kmarco",                  ==, sprintf_, buffer, "%kmarco", 42, 37);
@@ -929,7 +921,7 @@ PRINTF_TEST_CASE(unknown_flag__non_standard_format)
 
 #endif
 
-PRINTF_TEST_CASE(string_length)
+TEST_CASE("string_length", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("This",                    ==, sprintf_, buffer, "%.4s", mkstr("This is a test"));
@@ -947,7 +939,7 @@ PRINTF_TEST_CASE(string_length)
 
 #ifdef TEST_WITH_NON_STANDARD_FORMAT_STRINGS
 
-PRINTF_TEST_CASE(string_length__non_standard_format)
+TEST_CASE("string_length__non_standard_format", "[libprintf]")
 {
   char buffer[base_buffer_size];
   DISABLE_WARNING_PUSH
@@ -961,7 +953,7 @@ PRINTF_TEST_CASE(string_length__non_standard_format)
 #endif
 
 
-PRINTF_TEST_CASE(buffer_length)
+TEST_CASE("buffer_length", "[libprintf]")
 {
   char buffer[base_buffer_size];
   int ret;
@@ -989,7 +981,7 @@ PRINTF_TEST_CASE(buffer_length)
 }
 
 
-PRINTF_TEST_CASE(misc)
+TEST_CASE("misc", "[libprintf]")
 {
   char buffer[base_buffer_size];
   PRINTING_CHECK("53000atest-20 bit",       ==, sprintf_, buffer, "%u%u%ctest%d %s", 5, 3000, 'a', -20, mkstr("bit"));
@@ -1011,7 +1003,7 @@ PRINTF_TEST_CASE(misc)
 #endif
 }
 
-PRINTF_TEST_CASE(extremal_signed_integer_values)
+TEST_CASE("extremal_signed_integer_values", "[libprintf]")
 {
   char buffer[base_buffer_size];
   char expected[base_buffer_size];
@@ -1046,7 +1038,7 @@ PRINTF_TEST_CASE(extremal_signed_integer_values)
 #endif
 }
 
-PRINTF_TEST_CASE(extremal_unsigned_integer_values)
+TEST_CASE("extremal_unsigned_integer_values", "[libprintf]")
 {
   char buffer[base_buffer_size];
   char expected[base_buffer_size];
