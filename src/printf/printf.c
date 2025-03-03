@@ -948,7 +948,7 @@ static void print_exponential_number(output_gadget_t* output, floating_point_t n
   if (fall_back_to_decimal_only_mode) {
     if ((flags & FLAGS_ADAPT_EXP) && floored_exp10 >= -1 && ((double)decimal_part_components.integral == powers_of_10[floored_exp10 + 1])) {
       floored_exp10++; // Not strictly necessary, since floored_exp10 is no longer really used
-      precision--;
+      if (precision > 0U) { precision--; }
       // ... and it should already be the case that decimal_part_components.fractional == 0
     }
     // TODO: What about rollover strictly within the fractional part?
