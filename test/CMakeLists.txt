@@ -11,11 +11,11 @@ option(TEST_WITH_NON_STANDARD_FORMAT_STRINGS "Include tests using non-standard-c
 # ... don't worry, we'll suppress the compiler warnings for those.
 
 foreach(tgt ${test_targets})
-	add_executable(${tgt} "${tgt}.cpp")
+	add_executable(${tgt} ${tgt}.cpp catch_amalgamated.cpp)
 	set_target_properties(
 		${tgt}
 		PROPERTIES
-		CXX_STANDARD 11
+		CXX_STANDARD 14
 		CXX_STANDARD_REQUIRED YES
 		CXX_EXTENSIONS NO
 	)
