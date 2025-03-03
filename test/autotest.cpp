@@ -11,7 +11,6 @@
 #endif
 #include <assert.h>
 
-#include "printf_config.h"
 #include "../src/printf/printf.h"
 
 #ifdef __clang__

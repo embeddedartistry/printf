@@ -1,4 +1,3 @@
-#include <printf_config.h>
 #include <printf/printf.h>
 
 int strcmp_(const char* lhs, const char* rhs)

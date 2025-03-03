@@ -48,6 +48,12 @@ extern "C" {
 # include <stddef.h>
 #endif
 
+// Define this globally (e.g. gcc -DPRINTF_INCLUDE_CONFIG_H=1 ...) to include the
+// printf_config.h header file
+#if PRINTF_INCLUDE_CONFIG_H
+#include "printf_config.h"
+#endif
+
 #ifdef __GNUC__
 # if ((__GNUC__ == 4 && __GNUC_MINOR__>= 4) || __GNUC__ > 4)
 #  define ATTR_PRINTF(one_based_format_index, first_arg) \

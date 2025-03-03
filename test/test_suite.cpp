@@ -29,9 +29,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #define PRINTF_VISIBILITY static
-#if PRINTF_INCLUDE_CONFIG_H
-#include <printf_config.h>
-#endif
 #include <printf/printf.c>
 
 #if PRINTF_ALIAS_STANDARD_FUNCTION_NAMES_HARD
