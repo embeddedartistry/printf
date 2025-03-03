@@ -1,15 +1,12 @@
 syntax: glob
 
+# Generated build output
+buildresults/
+
 # Temporary, cache, swap files
 \#\#* 
 *.swp
 *.bkp
-
-# Files which "ask" to be hidden
-*~
-.*
-!.github
-unused/
 
 # Build artifacts
 *.a
