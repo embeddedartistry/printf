@@ -11,7 +11,7 @@ project(
 )
 
 option(BUILD_TESTS          "Build test programs for the library" OFF)
-option(BUILD_STATIC_LIBRARY "Build the library as static rather than shared" OFF)
+option(BUILD_SHARED_LIBS    "Build the library as a shared (dynamically-linked) object rather than a static one " ON)
 
 # Boolean options which go into config.h
 
@@ -76,11 +76,8 @@ validate_type_size("intmax_t")
 validate_type_size("size_t")
 validate_type_size("ptrdiff_t")
 
-if (BUILD_STATIC_LIBRARY)
-	add_library(printf STATIC)
-else()
-	add_library(printf SHARED)
-endif()
+# Note we've defined BUILD_SHARED_LIBS, which affects the following
+add_library(printf)
 
 add_library("printf::printf" ALIAS printf)
 
