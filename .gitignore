@@ -1,5 +1,8 @@
 syntax: glob
 
+*.patch
+*.diff
+
 # Generated build output
 buildresults/
 
