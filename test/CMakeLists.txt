@@ -101,7 +101,7 @@ if (TARGET test_suite)
 	target_include_directories(
 		test_suite
 		PRIVATE
-		"${GENERATED_INCLUDE_DIR}"
+		"${CONFIG_HEADER_DIR}"
 		"$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../src/>"
 	)
 	add_test(
@@ -111,14 +111,14 @@ if (TARGET test_suite)
 endif()
 
 target_link_libraries(autotest PRIVATE printf)
-target_include_directories(autotest PRIVATE "$<BUILD_INTERFACE:${GENERATED_INCLUDE_DIR}>")
+target_include_directories(autotest PRIVATE "$<BUILD_INTERFACE:${CONFIG_HEADER_DIR}>")
 
 add_test(
 	NAME "${PROJECT_NAME}.aliasing"
 	COMMAND "aliasing"
 )
 target_link_libraries(aliasing PRIVATE printf)
-target_include_directories(aliasing PRIVATE "$<BUILD_INTERFACE:${GENERATED_INCLUDE_DIR}>")
+target_include_directories(aliasing PRIVATE "$<BUILD_INTERFACE:${CONFIG_HEADER_DIR}>")
 
 # Not running autotest by default - it's randomized after all.
 
