@@ -11,8 +11,8 @@ project(
 # Project Build Options #
 #########################
 
-option(BUILD_TESTS          "Build test programs for the library" OFF)
-option(BUILD_SHARED_LIBS    "Build the library as a shared (dynamically-linked) object rather than a static one " ON)
+option(BUILD_TESTS          "Build test programs for the library" ON)
+option(BUILD_SHARED_LIBS    "Build the library as a shared (dynamically-linked) object rather than a static one " OFF)
 
 ########################
 # Type Size Validation #
