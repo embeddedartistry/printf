@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.14)
 
 enable_language(CXX)
 
+option(TEST_WITH_NON_STANDARD_FORMAT_STRINGS "Include tests using non-standard-compliant format strings?" ON)
+# ... don't worry, we'll suppress the compiler warnings for those.
+
 #############################
 # Primary catch2 Test Suite #
 #############################
@@ -33,9 +36,6 @@ if (NOT ALIAS_STANDARD_FUNCTION_NAMES STREQUAL SOFT)
 		"$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../src/>"
 	)
 endif()
-
-option(TEST_WITH_NON_STANDARD_FORMAT_STRINGS "Include tests using non-standard-compliant format strings?" ON)
-# ... don't worry, we'll suppress the compiler warnings for those.
 
 #########################
 # Comparison Test Suite #
