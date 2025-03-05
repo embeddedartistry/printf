@@ -107,6 +107,11 @@
 #define PRINTF_USE_DOUBLE_INTERNALLY  1
 #endif
 
+// Default choice - do not support MSVC int specifiers
+#ifndef PRINTF_SUPPORT_MSVC_STYLE_INTEGER_SPECIFIERS
+#define PRINTF_SUPPORT_MSVC_STYLE_INTEGER_SPECIFIERS 0
+#endif
+
 // According to the C languages standard, printf() and related functions must be able to print any
 // integral number in floating-point notation, regardless of length, when using the %f specifier -
 // possibly hundreds of characters, potentially overflowing your buffers. In this implementation,
