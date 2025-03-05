@@ -1,7 +1,4 @@
-cmake_minimum_required (VERSION 3.13)
-
-include(CheckTypeSize)
-
+cmake_minimum_required (VERSION 3.14)
 project(
 	printf
 	LANGUAGES C
@@ -10,12 +7,19 @@ project(
 	VERSION 6.0.0
 )
 
+#########################
+# Project Build Options #
+#########################
+
 option(BUILD_TESTS          "Build test programs for the library" OFF)
 option(BUILD_SHARED_LIBS    "Build the library as a shared (dynamically-linked) object rather than a static one " ON)
 
 ########################
 # Type Size Validation #
 ########################
+
+include(CheckTypeSize)
+
 # Checks related to the 'j', 'z' and 't' size modifiers
 
 check_type_size( "long"        SIZEOF_LONG       )
@@ -86,6 +90,8 @@ endif()
 ###########
 # Testing #
 ###########
+
+include(cmake/test/catch2.cmake)
 
 if (BUILD_TESTS)
 	enable_testing()

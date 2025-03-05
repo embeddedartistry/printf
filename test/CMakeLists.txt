@@ -1,13 +1,45 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.14)
 
 enable_language(CXX)
 
+#############################
+# Primary catch2 Test Suite #
+#############################
+
 if (NOT ALIAS_STANDARD_FUNCTION_NAMES STREQUAL SOFT)
-	list(APPEND test_targets test_suite)
+	add_executable(test_suite)
+	target_sources(test_suite PRIVATE test_suite.cpp)
+	target_link_libraries(test_suite PRIVATE catch2_dep)
+	set_target_properties(
+		test_suite
+		PROPERTIES
+		CXX_STANDARD 14
+		CXX_STANDARD_REQUIRED YES
+		CXX_EXTENSIONS NO
+	)
+
+	if (TEST_WITH_NON_STANDARD_FORMAT_STRINGS)
+		target_compile_definitions(test_suite PRIVATE TEST_WITH_NON_STANDARD_FORMAT_STRINGS)
+	endif()
+
+	# These two lines are necessary, since the test suite does not actually use the
+	# compiled library - it includes the library's source .c file; and that means we
+	# need to include the generated config.h file.
+	target_compile_definitions(test_suite PRIVATE PRINTF_INCLUDE_CONFIG_H)
+	target_include_directories(
+		test_suite
+		PRIVATE
+		"${CONFIG_HEADER_DIR}"
+		"$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../src/>"
+	)
 endif()
 
 option(TEST_WITH_NON_STANDARD_FORMAT_STRINGS "Include tests using non-standard-compliant format strings?" ON)
 # ... don't worry, we'll suppress the compiler warnings for those.
+
+#########################
+# Comparison Test Suite #
+#########################
 
 add_executable(autotest autotest.cpp)
 set_target_properties(
@@ -17,22 +49,12 @@ set_target_properties(
 	CXX_STANDARD_REQUIRED YES
 	CXX_EXTENSIONS NO
 )
+target_link_libraries(autotest PRIVATE printf)
+target_include_directories(autotest PRIVATE "$<BUILD_INTERFACE:${CONFIG_HEADER_DIR}>")
 
-foreach(tgt ${test_targets})
-	add_executable(${tgt} ${tgt}.cpp catch_amalgamated.cpp)
-	set_target_properties(
-		${tgt}
-		PROPERTIES
-		CXX_STANDARD 14
-		CXX_STANDARD_REQUIRED YES
-		CXX_EXTENSIONS NO
-	)
-
-
-	if (TEST_WITH_NON_STANDARD_FORMAT_STRINGS)
-		target_compile_definitions(${tgt} PRIVATE TEST_WITH_NON_STANDARD_FORMAT_STRINGS)
-	endif()
-endforeach()
+#######################
+# Aliasing Test Suite #
+#######################
 
 add_executable(aliasing "aliasing.c")
 set_target_properties(
@@ -42,10 +64,19 @@ set_target_properties(
 	C_STANDARD_REQUIRED YES
 	C_EXTENSIONS NO
 )
+
 if (${CMAKE_C_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_C_COMPILER_ID} STREQUAL "Clang")
     target_compile_options(aliasing PRIVATE -fno-builtin-printf)
 endif()
-list(APPEND test_targets aliasing)
+
+target_link_libraries(aliasing PRIVATE printf)
+target_include_directories(aliasing PRIVATE "$<BUILD_INTERFACE:${CONFIG_HEADER_DIR}>")
+
+###################
+# Common Settings #
+###################
+
+list(APPEND test_targets aliasing test_suite autotest)
 
 foreach(tgt ${test_targets})
 	get_target_property(tgt_lang ${tgt} LANGUAGE)
@@ -93,32 +124,16 @@ foreach(tgt ${test_targets})
 
 endforeach()
 
-if (TARGET test_suite)
-	# These two lines are necessary, since the test suite does not actually use the
-	# compiled library - it includes the library's source .c file; and that means we
-	# need to include the generated config.h file.
-	target_compile_definitions(test_suite PRIVATE PRINTF_INCLUDE_CONFIG_H)
-	target_include_directories(
-		test_suite
-		PRIVATE
-		"${CONFIG_HEADER_DIR}"
-		"$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../src/>"
-	)
-	add_test(
-		NAME "${PROJECT_NAME}.test_suite"
-		COMMAND "test_suite" # ${TEST_RUNNER_PARAMS}
-	)
-endif()
+#####################
+# Test Registration #
+#####################
 
-target_link_libraries(autotest PRIVATE printf)
-target_include_directories(autotest PRIVATE "$<BUILD_INTERFACE:${CONFIG_HEADER_DIR}>")
+register_catch2_test(${PROJECT_NAME}.test_suite test_suite)
 
 add_test(
 	NAME "${PROJECT_NAME}.aliasing"
 	COMMAND "aliasing"
 )
-target_link_libraries(aliasing PRIVATE printf)
-target_include_directories(aliasing PRIVATE "$<BUILD_INTERFACE:${CONFIG_HEADER_DIR}>")
 
-# Not running autotest by default - it's randomized after all.
-
+# TODO - run autotest?
+# Old status: Not running autotest by default - it's randomized after all.
