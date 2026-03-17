@@ -91,9 +91,8 @@ endif()
 # Testing #
 ###########
 
-include(cmake/test/catch2.cmake)
-
 if (BUILD_TESTS)
+	include(cmake/test/catch2.cmake)
 	enable_testing()
 	add_subdirectory(test)
 endif()
